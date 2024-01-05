@@ -20,11 +20,18 @@ import requests
 import discordmongo
 import motor.motor_asyncio
 import datetime
-from dotenv import load_dotenv
 
-load_dotenv()
+def getConfig(key):
+    with open("config.json", "r") as f:
+        data = json.load(f)
 
-bot = discord.Bot(intents=discord.Intents.all())
+    return data[key]
+
+intents = discord.Intents.default()
+intents.members = True
+intents.presences = True
+intents.message_content = True
+bot = discord.Bot(intents=intents)
 
 class Commands(commands.Cog):
     def __init__(self, bot):
@@ -363,4 +370,4 @@ bot.websiteSocket = WebsocketClient()
 Thread(target=bot.websiteSocket.start).start()
 
 Thread(target=webserver.run).start()
-bot.run(os.getenv("token"))
+bot.run(getConfig("token"))
