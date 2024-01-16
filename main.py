@@ -17,8 +17,6 @@ import traceback
 import sys
 import json
 import requests
-import discordmongo
-import motor.motor_asyncio
 import datetime
 
 def getConfig(key):
