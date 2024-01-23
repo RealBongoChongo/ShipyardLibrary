@@ -323,3 +323,12 @@ def notifsEnabled(member):
             return True
         return False
     return True
+
+def setDistributor(shipClass, userId):
+    with open("json/shippings.json", "r") as f:
+        data = json.load(f)
+
+    data[shipClass] = userId
+
+    with open("json/shippings.json", "w") as f:
+        json.dump(data, f, indent=4)

@@ -319,7 +319,11 @@ async def on_interaction(interaction: discord.Interaction):
             ship = jsonhandler.getRequests()[index]
             user = interaction.guild.get_member(ship["member"])
             if not user: 
-                await interaction.guild.fetch_member(ship["member"])
+                try:
+                    await interaction.guild.fetch_member(ship["member"])
+                except:
+                    await interaction.response.send_message("Unable to find user... contact bungo on what you would like to do about this particular request", ephemeral=True)
+                    return
             
             if typeButton == "ready":
                 try:
@@ -335,8 +339,10 @@ async def on_interaction(interaction: discord.Interaction):
                 view.add_item(claimed)
                 await message.edit(content=message.content, embed=message.embeds[0], view=view)
                 jsonhandler.setReady(index, interaction.user.id)
+                jsonhandler.setDistributor(ship["class"], interaction.user.id)
             elif typeButton == "deny":
                 jsonhandler.delRequest(index)
+                jsonhandler.setDistributor(ship["class"], interaction.user.id)
                 try:
                     await user.send("Your request for the `{}` ship has been denied by {}.".format(ship["class"], interaction.user.mention))
                     await interaction.delete_original_response()
@@ -347,6 +353,7 @@ async def on_interaction(interaction: discord.Interaction):
             elif typeButton == "claimed":
                 jsonhandler.insertShip(user, ship)
                 jsonhandler.delRequest(index)
+                jsonhandler.setDistributor(ship["class"], interaction.user.id)
                 await interaction.delete_original_response()
         except Exception as e:
             error = discord.utils.get(interaction.guild.channels, id=1051489091339956235)
