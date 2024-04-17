@@ -317,13 +317,12 @@ async def on_interaction(interaction: discord.Interaction):
             if not index in jsonhandler.getRequests():
                 return await interaction.delete_original_response()
             ship = jsonhandler.getRequests()[index]
-            user = interaction.guild.get_member(ship["member"])
-            if not user: 
-                try:
-                    await interaction.guild.fetch_member(ship["member"])
-                except:
-                    await interaction.response.send_message("Unable to find user... Deleting request\n\nRequest JSON (Incase this was a mistake):\n```json\n\"{}\": {{}}\n```".format(index, ship), ephemeral=True)
-                    return
+            user = None
+            try:
+                await interaction.guild.fetch_member(ship["member"])
+            except:
+                await interaction.response.send_message("Unable to find user... Deleting request\n\nRequest JSON (Incase this was a mistake):\n```json\n\"{}\": {{}}\n```".format(index, ship), ephemeral=True)
+                return
             
             if typeButton == "ready":
                 try:
