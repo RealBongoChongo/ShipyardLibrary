@@ -321,6 +321,7 @@ async def on_interaction(interaction: discord.Interaction):
             try:
                 await interaction.guild.fetch_member(ship["member"])
             except:
+                jsonhandler.delRequest(index)
                 await interaction.response.send_message("Unable to find user... Deleting request\n\nRequest JSON (Incase this was a mistake):\n```json\n\"{}\": {{}}\n```".format(index, ship), ephemeral=True)
                 return
             
