@@ -169,7 +169,7 @@ Head to https://bank.federationfleet.xyz/ufp/library, authenticate with discord,
 
         async def validateToken(interaction: discord.Interaction):
             if interaction.user != user:
-                return await interaction.response.send_message(content="This interaction is not for you", ephemeral=True)
+                return await interaction.respond(content="This interaction is not for you", ephemeral=True)
             try:
                 if modal.children[0].value:
                     valid = await trello.validate(modal.children[0].value)
@@ -183,7 +183,7 @@ Head to https://bank.federationfleet.xyz/ufp/library, authenticate with discord,
 
         async def validateBoard(interaction: discord.Interaction):
             if interaction.user != user:
-                return await interaction.response.send_message(content="This interaction is not for you", ephemeral=True)
+                return await interaction.respond(content="This interaction is not for you", ephemeral=True)
             try:
                 await interaction.response.defer()
                 if boardmodal.children[0].value:
@@ -212,7 +212,7 @@ Head to https://bank.federationfleet.xyz/ufp/library, authenticate with discord,
 
         async def callback(interaction: discord.Interaction):
             if interaction.user != user:
-                return await interaction.response.send_message(content="This interaction is not for you", ephemeral=True)
+                return await interaction.respond(content="This interaction is not for you", ephemeral=True)
             try:
                 await interaction.response.send_modal(modal)
             except Exception as e:
@@ -220,7 +220,7 @@ Head to https://bank.federationfleet.xyz/ufp/library, authenticate with discord,
 
         async def boardcallback(interaction: discord.Interaction):
             if interaction.user != user:
-                return await interaction.response.send_message(content="This interaction is not for you", ephemeral=True)
+                return await interaction.respond(content="This interaction is not for you", ephemeral=True)
             try:
                 await interaction.response.send_modal(boardmodal)
             except Exception as e:
@@ -312,7 +312,7 @@ async def on_interaction(interaction: discord.Interaction):
             if not len(interaction.custom_id.split(" | ")) == 2:
                 return
             if not interaction.user.get_role(1012070243004321802):
-                return await interaction.response.send_message(content="You aren't a ship distributor", ephemeral=True)
+                return await interaction.respond(content="You aren't a ship distributor", ephemeral=True)
             typeButton, index = interaction.custom_id.split(" | ")[0], interaction.custom_id.split(" | ")[1]
             if not index in jsonhandler.getRequests():
                 return await interaction.delete_original_response()
@@ -322,7 +322,7 @@ async def on_interaction(interaction: discord.Interaction):
                 await interaction.guild.fetch_member(ship["member"])
             except:
                 jsonhandler.delRequest(index)
-                await interaction.response.send_message("Unable to find user... Deleting request\n\nRequest JSON (Incase this was a mistake):\n```json\n\"{}\": {{}}\n```".format(index, ship), ephemeral=True)
+                await interaction.respond("Unable to find user... Deleting request\n\nRequest JSON (Incase this was a mistake):\n```json\n\"{}\": {{}}\n```".format(index, ship), ephemeral=True)
                 return
             
             if typeButton == "ready":
