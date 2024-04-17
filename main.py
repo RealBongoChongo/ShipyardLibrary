@@ -323,6 +323,7 @@ async def on_interaction(interaction: discord.Interaction):
             except:
                 jsonhandler.delRequest(index)
                 await interaction.respond("Unable to find user... Deleting request\n\nRequest JSON (Incase this was a mistake):\n```json\n\"{}\": {}\n```".format(index, ship), ephemeral=True)
+                await interaction.delete_original_response()
                 return
             
             if typeButton == "ready":
@@ -354,7 +355,6 @@ async def on_interaction(interaction: discord.Interaction):
                 jsonhandler.insertShip(user, ship)
                 jsonhandler.delRequest(index)
                 jsonhandler.setDistributor(ship["class"], interaction.user.id)
-                await interaction.delete_original_response()
         except Exception as e:
             error = discord.utils.get(interaction.guild.channels, id=1051489091339956235)
             await error.send(traceback.format_exc())
