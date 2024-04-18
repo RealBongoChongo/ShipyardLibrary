@@ -52,6 +52,15 @@ def insertCache(memberId, username):
     with open("json/cache.json", "w") as f:
         json.dump(data, f, indent=4)
 
+def deleteCache(memberId):
+    with open("json/cache.json", "r") as f:
+        data = json.load(f)
+        
+    data.pop(str(memberId))
+
+    with open("json/cache.json", "w") as f:
+        json.dump(data, f, indent=4)
+
 def getRequests():
     with open("json/requests.json", "r") as f:
         data = json.load(f)
