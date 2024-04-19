@@ -82,7 +82,7 @@ class ShipSelector(discord.ui.Select):
                         modal.add_item(shipRegistry)
     
                         if not jsonhandler.isInCache(member.id):
-                            username = discord.ui.InputText(label="ROBLOX Username")
+                            username = discord.ui.InputText(label="ROBLOX Username (NOT EMAIL)")
                             modal.add_item(username)
     
                         async def callback(interaction: discord.Interaction):
@@ -157,8 +157,8 @@ class ShipSelector(discord.ui.Select):
                             child.disabled = True
 
                         if not jsonhandler.isInCache(member.id):
-                            modal = discord.ui.Modal(title="Give Roblox Username", timeout=None)
-                            username = discord.ui.InputText(label="ROBLOX Username")
+                            modal = discord.ui.Modal(title="Give Roblox Username (NOT EMAIL)", timeout=None)
+                            username = discord.ui.InputText(label="ROBLOX Username (NOT EMAIL)")
                             modal.add_item(username)
     
                             async def callback(interaction: discord.Interaction):
