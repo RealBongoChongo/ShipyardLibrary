@@ -1,6 +1,5 @@
 import discord
 import traceback
-from . import ships
 from . import ranks
 from . import jsonhandler
 import json
